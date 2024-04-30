@@ -1,0 +1,46 @@
+{% extends "layout.html" %} 
+{% block title %} 
+Home 
+{% endblock %} 
+{% block content %} 
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+                //listens to 'price update' message on socket
+                socket.on('price update', function(msg) {
+                    location.reload()
+                });
+    
+           });
+    </script>
+</head>
+
+<h1 id="title">GPS Speed</h1> 
+<div class="block">
+    <div class="forms">
+        <form action="/decreasespeed/" method="post"> 
+            <button class="button" type="submit" formmethod="post">Decrease Speed</button> 
+            </form> 
+            <h2>{{ speed }} km/h</h2> 
+            <div class="picardia" style="animation: play {{ 4/speed if speed!=0 else 0}}s 0.25s steps(19) infinite;"></div> 
+            <form action="/increasespeed/" method="post"> 
+            <button class="button" type="submit" formmethod="post">Increase Speed</button> 
+        </form>
+    </div>
+    <div class="forms">
+        <form action="/decreasetime/" method="post"> 
+            <button class="button" type="submit" formmethod="post">Roll Back Time</button> 
+            </form> 
+            <h2 class="picardiaspacer">{{ time.strftime("%H%M") }} hrs</h2>
+            <form action="/increasetime/" method="post"> 
+            <button class="button" type="submit" formmethod="post">Advance Time</button> 
+        </form>
+    </div>
+</div>
+
+{% endblock %}

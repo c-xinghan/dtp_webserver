@@ -11,8 +11,8 @@ Home
             $(document).ready(function(){
                 var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-                //listens to 'price update' message on socket
-                socket.on('price update', function(msg) {
+                //listens to 'speed update' message on socket
+                socket.on('speed update', function(msg) {
                     location.reload()
                 });
     
